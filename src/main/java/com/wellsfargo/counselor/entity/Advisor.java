@@ -1,10 +1,10 @@
 package com.wellsfargo.counselor.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.lang.Long;
+import java.util.Set;
 
 @Entity
 public class Advisor {
@@ -28,8 +28,13 @@ public class Advisor {
     @Column(nullable = false)
     private String email;
 
-    protected Advisor() {
+    @Column(nullable = false)
+    private String createdDate;
 
+    @OneToMany(mappedBy = "Advisor")
+    private Set<Client> clients;
+
+    public Advisor() {
     }
 
     public Advisor(String firstName, String lastName, String address, String phone, String email) {
@@ -38,10 +43,11 @@ public class Advisor {
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.createdDate = createdDate;
     }
 
     public Long getAdvisorId() {
-        return advisorId;
+        return (Long) advisorId;
     }
 
     public String getFirstName() {
@@ -82,5 +88,21 @@ public class Advisor {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Set<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(Set<Client> clients) {
+        this.clients = clients;
     }
 }
